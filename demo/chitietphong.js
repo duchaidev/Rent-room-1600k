@@ -3,7 +3,9 @@ import {
   getFirestore,
   doc,
   getDoc,
+  addDoc,
   deleteDoc,
+  collection,
 } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -17,6 +19,9 @@ const firebaseConfig = {
   appId: "1:1050127576221:web:14144c0b90b03cc4277874",
   measurementId: "G-ZFPZ49LKZJ",
 };
+
+const email = localStorage.getItem("email");
+const modalBookRoom = document.getElementById("modalBookRoom");
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -90,12 +95,18 @@ if (roomID) {
               <button type="button" class="btn btn-secondary">Nhắn zalo</button>
             </div>
             <div class="profile_button">
-              <button class="btn btn-primary editRoomButton" style="width: 48%">
+            ${
+              email === roomData[roomKeys[0]]?.email
+                ? `<button class="btn btn-primary editRoomButton" style="width: 48%">
                 Sửa
               </button>
               <button class="btn btn-danger deleteRoomButton" style="width: 48%">
                 Xóa
-              </button>
+              </button>`
+                : `<button class="btn btn-primary btnbookroom" style="width: 48%">
+                Đặt phòng
+              </button> `
+            }
             </div>
             <ul style="margin-top: 20px">
             <li>An Ninh: ${
@@ -135,15 +146,8 @@ if (roomID) {
           <h3 style="text-decoration: underline; padding-top: 20px">
             Vị trí trên bản đồ
           </h3>
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d35436.81397300299!2d105.82522097737045!3d20.999188593668975!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac9b3f23b42b%3A0x49fa01aaa06d239b!2sVinhomes%20Royal%20City!5e0!3m2!1svi!2s!4v1699431732554!5m2!1svi!2s"
-            width="600"
-            height="350"
-            style="border: 0"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
+          
+          ${roomData[roomKeys[0]]?.diaChi}
         </div>
     `;
 
@@ -151,37 +155,80 @@ if (roomID) {
       // Kiểm tra xem có key nào không
       // Điền thông tin phòng vào các ô input trong biểu mẫu
 
-      // Cập nhật thông tin phòng trong Firestore
+      if (email === roomData[roomKeys[0]]?.email) {
+        const editButton = document.querySelector(".editRoomButton");
+        editButton.addEventListener("click", () => {
+          // Chuyển hướng sang trang sửa phòng với roomID
+          window.location.href = `suaphong.html?roomID=${roomID}`;
+        });
+
+        const deleteButton = document.querySelector(".deleteRoomButton");
+        deleteButton.addEventListener("click", async () => {
+          // Hiển thị thông báo xác nhận
+          const isConfirmed = confirm("Bạn có chắc chắn muốn xóa phòng này?");
+
+          if (isConfirmed) {
+            try {
+              const roomDocRef = doc(db, "rooms", roomID);
+
+              // Xóa tài liệu từ Firestore
+              await deleteDoc(roomDocRef);
+              window.location.href = `trangchu.html`;
+              console.log("Đã xóa phòng:", roomID);
+              // Hoặc thực hiện các bước khác sau khi xóa
+            } catch (error) {
+              console.error("Lỗi khi xóa phòng:", error);
+            }
+          }
+        });
+      } else {
+        const btnBookRoom = document.querySelector(".btnbookroom");
+        btnBookRoom.addEventListener("click", () => {
+          console.log(modalBookRoom);
+          modalBookRoom.classList.add("modalBookRoom_show");
+        });
+        modalBookRoom.addEventListener("click", (e) => {
+          if (e.target.classList.contains("modalBookRoom")) {
+            modalBookRoom.classList.remove("modalBookRoom_show");
+          }
+        });
+      }
     }
   } catch (error) {
     console.error("Lỗi khi lấy thông tin phòng:", error);
+    window.location.href = `trangchu.html`;
   }
 } else {
   console.log("Không có giá trị 'roomID' trong URL.");
+  window.location.href = `trangchu.html`;
 }
 
-const editButton = document.querySelector(".editRoomButton");
-editButton.addEventListener("click", () => {
-  // Chuyển hướng sang trang sửa phòng với roomID
-  window.location.href = `suaphong.html?roomID=${roomID}`;
-});
+const btn_submit_bookroom = document.querySelector("#btn_submit_bookroom");
+btn_submit_bookroom.addEventListener("click", async () => {
+  const bookRoomCollection = collection(db, "book_rooms");
 
-const deleteButton = document.querySelector(".deleteRoomButton");
-deleteButton.addEventListener("click", async () => {
-  // Hiển thị thông báo xác nhận
-  const isConfirmed = confirm("Bạn có chắc chắn muốn xóa phòng này?");
-
-  if (isConfirmed) {
-    try {
-      const roomDocRef = doc(db, "rooms", roomID);
-
-      // Xóa tài liệu từ Firestore
-      await deleteDoc(roomDocRef);
-      window.location.href = `trangchu.html`;
-      console.log("Đã xóa phòng:", roomID);
-      // Hoặc thực hiện các bước khác sau khi xóa
-    } catch (error) {
-      console.error("Lỗi khi xóa phòng:", error);
-    }
+  const phone_bookroom = document.querySelector("#phone_bookroom").value;
+  const fullname_bookroom = document.querySelector("#fullname_bookroom").value;
+  const email_bookroom = document.querySelector("#email_bookroom").value;
+  if (
+    phone_bookroom === "" ||
+    fullname_bookroom === "" ||
+    email_bookroom === ""
+  ) {
+    alert("Vui lòng nhập đầy đủ thông tin");
+    return;
+  }
+  try {
+    await addDoc(bookRoomCollection, {
+      phone: phone_bookroom,
+      fullname: fullname_bookroom,
+      email: email_bookroom,
+      roomID: roomID,
+    });
+    alert("Đặt phòng thành công");
+    modalBookRoom.classList.remove("modalBookRoom_show");
+  } catch (error) {
+    console.log(error);
+    alert("Đặt phòng thất bại");
   }
 });

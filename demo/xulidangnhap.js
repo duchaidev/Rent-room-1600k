@@ -1,6 +1,4 @@
 const wrapper = document.querySelector(".wrapper");
-const wrapperdk = document.querySelector(".wrapperdk");
-const loginlink = document.querySelector(".login-link");
 const registerlink = document.querySelector(".register-link");
 
 registerlink.addEventListener("click", () => {
@@ -40,25 +38,30 @@ const firebaseConfig = {
   measurementId: "G-ZFPZ49LKZJ",
 };
 
+const email = localStorage.getItem("email");
+if (email) {
+  // Người dùng đã đăng nhập, thực hiện hành động phù hợp (ví dụ: chuyển hướng đến trang đã đăng nhập)
+  console.log("Đã đăng nhập với tên người dùng: " + email);
+  window.location.href = "trangchu.html";
+}
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 // document.addEventListener("click", function () {
 const registerButton = document.querySelector("#btndangnhap");
-
+checkLoginStatus();
 registerButton.addEventListener("click", async function (e) {
   e.preventDefault();
 
   const errorMessage = document.querySelector("#error-message");
   const email = document.querySelector("input[type='email']").value;
   const password = document.querySelector("input[type='password']").value;
-  console.log(email);
-  console.log(password);
   try {
     // Sử dụng Firebase Authentication API sau khi đã khởi tạo Firebase SDK
     await signInWithEmailAndPassword(auth, email, password);
     console.log("Đăng ký thành công");
+    localStorage.setItem("email", email);
     window.location.href = "trangchu.html";
   } catch (error) {
     errorMessage.style.opacity = "100";

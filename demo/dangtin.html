@@ -137,6 +137,17 @@
             <label for="dienTich">Diện Tích (m²):</label>
             <input type="number" class="form-control" id="dienTich" required />
           </div>
+          <div class="form-group">
+            <label for="diaChi">Địa chỉ:</label>
+            <textarea
+              name="diaChi"
+              id="diaChi"
+              cols="30"
+              class="form-control"
+              rows="6"
+              placeholder="Nhập Iframe google"
+            ></textarea>
+          </div>
           <!-- Chi phí -->
           <h2 class="mt-4">Chi Phí</h2>
           <div class="form-group">
@@ -204,68 +215,5 @@
       </div>
     </body>
     <script type="module" src="dangtin.js"></script>
-    <!-- <script type="module">
-      // Import the functions you need from the SDKs you need
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
-      import {
-        getDatabase,
-        ref,
-        get,
-        set,
-        child,
-      } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
-
-      // Your web app's Firebase configuration
-      const firebaseConfig = {
-        apiKey: "AIzaSyCpLDBv1bfuq8kSArh7ATnZhRTMFt4HIYY",
-        authDomain: "fir-89253.firebaseapp.com",
-        projectId: "fir-89253",
-        storageBucket: "fir-89253.appspot.com",
-        messagingSenderId: "138196254814",
-        appId: "1:138196254814:web:1c8a65a6e667a5ece734cf",
-      };
-
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-
-      const db = getDatabase(app);
-      document.getElementById("submit").addEventListener("click", function (e) {
-        e.preventDefault();
-
-        const loaiPhong = document.getElementById("loaiPhong").value;
-        const roomData = {
-          soLuongPhong: document.getElementById("soLuongPhong").value,
-          sucChua: document.getElementById("sucChua").value,
-          gioiTinh: document.getElementById("gioiTinh").value,
-          dienTich: document.getElementById("dienTich").value,
-          giaChoThue: document.getElementById("giaChoThue").value,
-          tienDien: document.getElementById("tienDien").value,
-          tienNuoc: document.getElementById("tienNuoc").value,
-          anh: document.getElementById("anh").value,
-          soDienThoai: document.getElementById("soDienThoai").value,
-          tieuDeBaiDang: document.getElementById("tieuDeBaiDang").value,
-          noiDungMoTa: document.getElementById("noiDungMoTa").value,
-          gioMoCua: document.getElementById("gioMoCua").value,
-        };
-        const roomsRef = ref(db, "rooms/" + loaiPhong);
-        const newRoomRef = child(roomsRef, generateRandomID()); // Tạo một tham chiếu mới với ID ngẫu nhiên
-        set(newRoomRef, roomData)
-          .then(() => {
-            alert("Dữ liệu đã được tải lên Firebase thành công.");
-            // Đặc thù xử lý sau khi tải lên thành công
-          })
-          .catch((error) => {
-            console.error("Lỗi khi tải dữ liệu lên Firebase: " + error);
-            // Xử lý lỗi nếu có
-          });
-      });
-
-      // Hàm để tạo ID ngẫu nhiên (ví dụ, có thể sử dụng thời gian hiện tại)
-      function generateRandomID() {
-        return Date.now().toString();
-      }
-    </script> -->
   </body>
 </html>

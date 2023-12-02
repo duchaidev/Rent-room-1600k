@@ -101,6 +101,50 @@
       </nav>
     </header>
 
+    <div class="modalBookRoom" id="modalBookRoom">
+      <div class="modalBookRoom_child">
+        <form action="POST">
+          <label for="fullname_bookroom">Họ tên</label>
+          <input
+            type="text"
+            name="fullname_bookroom"
+            id="fullname_bookroom"
+            class="modalBookRoom_child_input"
+            placeholder="Nhập fullname"
+          />
+          <label for="phone_bookroom" style="margin-top: 20px"
+            >Số điện thoại</label
+          >
+          <input
+            type="text"
+            name="phone_bookroom"
+            id="phone_bookroom"
+            class="modalBookRoom_child_input"
+            placeholder="Nhập phone"
+          />
+          <label for="email_bookroom" style="margin-top: 20px">Email</label>
+          <input
+            type="text"
+            name="email_bookroom"
+            id="email_bookroom"
+            class="modalBookRoom_child_input"
+            placeholder="Nhập email"
+          />
+          <div
+            style="display: flex; justify-content: center; align-items: center"
+          >
+            <button
+              class="btn_submit_bookroom"
+              id="btn_submit_bookroom"
+              type="button"
+            >
+              Gửi
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <div id="room-detail" class="room-detail">
       <!-- Nội dung trang chi tiết sẽ được hiển thị ở đây bằng JavaScript -->
       <!-- <h1 class="title">Cho thuê nhà(32m2) mặt ngõ Lương Thế Vinh</h1>
@@ -230,5 +274,12 @@
     </footer>
 
     <script type="module" src="chitietphong.js"></script>
+    <script>
+      function submitData() {
+        var userInput = document.getElementById("userInput").value;
+        console.log("Dữ liệu nhập vào: ", userInput);
+        // Thực hiện các xử lý khác tùy thuộc vào nhu cầu của bạn
+      }
+    </script>
   </body>
 </html>

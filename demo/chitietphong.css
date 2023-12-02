@@ -52,3 +52,48 @@
     padding-top: 20px;
 
 }
+.modalBookRoom{
+    position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.3);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+}
+.modalBookRoom_child{
+    width: 50%;
+    background: #fff;
+    border-radius: 5px;
+    padding: 30px;
+    position: relative;
+}
+
+.modalBookRoom_show{
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modalBookRoom_child_input{
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    /* margin: 10px 0px; */
+    outline: none;
+}
+
+.btn_submit_bookroom{
+    padding: 4px 26px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: white;
+    margin-left: auto;
+    margin-right: auto; 
+    margin-top: 10px;
+    background: #0289f0;
+}

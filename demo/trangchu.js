@@ -21,6 +21,20 @@ const firebaseConfig = {
   measurementId: "G-ZFPZ49LKZJ",
 };
 
+const email = localStorage.getItem("email");
+if (email) {
+  const checkUser = document.getElementById("checkUser");
+  checkUser.innerHTML = "";
+  const userLink = document.createElement("a");
+  userLink.className = "nav-link active";
+  userLink.href = "trangchu.html";
+
+  userLink.innerHTML = `
+  <span>&#128274;</span> ${email}
+    `;
+  checkUser.appendChild(userLink);
+}
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -50,7 +64,7 @@ function updateRoomList(rooms) {
     const roomCard = document.createElement("div");
     roomCard.className = "col-md-4 room-card";
     roomCard.innerHTML = `
-      <img class="room-image" src="${
+      <img class="room-image" style="width: 100%; aspect-ratio: 16/9; object-fit: cover" src="${
         roomData[roomKeys[0]].anh
       }" loading="lazy" alt="${roomData[roomKeys[0]].loaiPhong}">
       <h3>${roomKeys[0]}</h3>

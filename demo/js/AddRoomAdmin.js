@@ -2,8 +2,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebas
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 import {
   getFirestore,
-  doc,
-  setDoc,
   addDoc,
   collection,
 } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
@@ -27,13 +25,6 @@ const firebaseConfig = {
   measurementId: "G-ZFPZ49LKZJ",
 };
 
-const email = localStorage.getItem("email");
-if (!email) {
-  // Người dùng đã đăng nhập, thực hiện hành động phù hợp (ví dụ: chuyển hướng đến trang đã đăng nhập)
-  console.log("Đã đăng nhập với tên người dùng: " + email);
-  window.location.href = "trangchu.html";
-}
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -54,7 +45,6 @@ registerButton.addEventListener("click", async function (e) {
     sucChua: document.getElementById("sucChua").value,
     gioiTinh: document.getElementById("gioiTinh").value,
     dienTich: document.getElementById("dienTich").value,
-    diaChi: document.getElementById("diaChi").value,
     giaChoThue: document.getElementById("giaChoThue").value,
     tienich: {
       WC_Rieng: document.getElementById("tienIchWC").checked,
@@ -70,7 +60,6 @@ registerButton.addEventListener("click", async function (e) {
     tieuDeBaiDang: document.getElementById("tieuDeBaiDang").value,
     noiDungMoTa: document.getElementById("noiDungMoTa").value,
     gioMoCua: document.getElementById("gioMoCua").value,
-    email: email,
   };
 
   const anhInput = document.getElementById("anh");

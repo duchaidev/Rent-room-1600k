@@ -1,4 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-analytics.js";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -23,22 +24,18 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const email = localStorage.getItem("email");
-if (email) {
-  // Người dùng đã đăng nhập, thực hiện hành động phù hợp (ví dụ: chuyển hướng đến trang đã đăng nhập)
-  console.log("Đã đăng nhập với tên người dùng: " + email);
-  window.location.href = "trangchu.html";
-}
+
 const registerButton = document.querySelector("#btndangki");
 
 registerButton.addEventListener("click", async function (e) {
   e.preventDefault();
 
-  const username = document.querySelector("input[type='text']").value;
-  const email = document.querySelector("input[type='email']").value;
-  const password = document.querySelector("input[type='password']").value;
+  const username = document.querySelector("#username").value;
+  const email = document.querySelector("#email").value;
+  const password = document.querySelector("#password").value;
   console.log(username);
   console.log(email);
   console.log(password);
@@ -49,8 +46,8 @@ registerButton.addEventListener("click", async function (e) {
       email,
       password
     );
-    console.log("Đăng ký thành công");
-    // Thêm thông tin người dùng vào Firestore
+    console.log("Thêm người dùng thành công");
+    // Thêm thông tin người dùng vào Cloud Firestore
     const uid = userCredential.user.uid;
 
     await setDoc(doc(db, "Users", uid), {
@@ -58,7 +55,9 @@ registerButton.addEventListener("click", async function (e) {
       email: email,
       // Thêm các trường khác nếu cần
     });
+    alert("Thêm người dùng thành công");
   } catch (error) {
-    console.error("Lỗi đăng ký:", error);
+    alert("Thêm người dùng thất bại");
+    console.error("Lỗi Thêm người dùng:", error);
   }
 });

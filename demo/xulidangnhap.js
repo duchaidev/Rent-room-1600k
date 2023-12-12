@@ -50,10 +50,9 @@ const auth = getAuth(app);
 
 // document.addEventListener("click", function () {
 const registerButton = document.querySelector("#btndangnhap");
-checkLoginStatus();
+// checkLoginStatus();
 registerButton.addEventListener("click", async function (e) {
   e.preventDefault();
-
   const errorMessage = document.querySelector("#error-message");
   const email = document.querySelector("input[type='email']").value;
   const password = document.querySelector("input[type='password']").value;

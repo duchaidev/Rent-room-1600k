@@ -33,7 +33,18 @@ if (!email) {
   console.log("Đã đăng nhập với tên người dùng: " + email);
   window.location.href = "trangchu.html";
 }
+if (email) {
+  const checkUser = document.getElementById("checkUser");
+  checkUser.innerHTML = "";
+  const userLink = document.createElement("a");
+  userLink.className = "nav-link active";
+  userLink.href = "trangchu.html";
 
+  userLink.innerHTML = `
+  <span>&#128274;</span> ${email}
+    `;
+  checkUser.appendChild(userLink);
+}
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);

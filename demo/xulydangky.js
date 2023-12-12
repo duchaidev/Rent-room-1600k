@@ -58,7 +58,9 @@ registerButton.addEventListener("click", async function (e) {
       email: email,
       // Thêm các trường khác nếu cần
     });
+    window.location.href = "dangnhap.html";
   } catch (error) {
     console.error("Lỗi đăng ký:", error);
+    alert("Đăng ký thất bại.", error);
   }
 });

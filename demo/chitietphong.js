@@ -50,7 +50,7 @@ if (roomID) {
       const roomCard = document.createElement("div");
       roomCard.innerHTML = `
         <h1 class="title">${roomData[roomKeys[0]]?.tieuDeBaiDang}</h1>
-        <p class="address">Địa chỉ: Đường Lương Thế Vinh, Thanh Xuân, Hà Nội</p>
+        <p class="address">Địa chỉ: ${roomData[roomKeys[0]]?.diaChi}</p>
         <div class="info_price">
           <p class="">
             <span class="price">${
@@ -147,7 +147,7 @@ if (roomID) {
             Vị trí trên bản đồ
           </h3>
           
-          ${roomData[roomKeys[0]]?.diaChi}
+          ${roomData[roomKeys[0]]?.diaChiIframe}
         </div>
     `;
 

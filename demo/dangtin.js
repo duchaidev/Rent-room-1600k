@@ -66,6 +66,7 @@ registerButton.addEventListener("click", async function (e) {
     gioiTinh: document.getElementById("gioiTinh").value,
     dienTich: document.getElementById("dienTich").value,
     diaChi: document.getElementById("diaChi").value,
+    diaChiIframe: document.getElementById("diaChiIframe").value,
     giaChoThue: document.getElementById("giaChoThue").value,
     tienich: {
       WC_Rieng: document.getElementById("tienIchWC").checked,
